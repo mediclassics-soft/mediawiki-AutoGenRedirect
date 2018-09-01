@@ -1,0 +1,19 @@
+{
+	"name": "AutoGenRedirect",
+	"version": "0.1",
+	"author": [
+		"Bruce"
+	],
+	"description": "Automatically generate redirect page",
+	"url": "",
+	"license-name": "MIT",
+	"AutoloadClasses": {
+		"AutoGenRedirect": "AutoGenRedirect.body.php"
+	},
+	"Hooks": {
+		"PageContentSaveComplete": [
+			"AutoGenRedirect::createRedirectFromTitle"
+		]
+	},
+	"manifest_version": 1
+}
