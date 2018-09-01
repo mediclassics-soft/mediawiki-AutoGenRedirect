@@ -1,4 +1,4 @@
-<?php
+ï»¿<?php
 
 class AutoGenRedirect {
 
@@ -63,9 +63,9 @@ class AutoGenRedirect {
 
 class Tools {
 
-	public static $chrSetBf = array("°¡", "³ª", "´Ù", "¶ó");
+	public static $chrSetBf = array("ê°€", "ë‚˜", "ë‹¤", "ë¼");
 	
-	public static $chrSetAf = array("Ê«", "Ñß", "Òý", "Ôþ");
+	public static $chrSetAf = array("å®¶", "ï¤’", "å¤š", "ç¾…");
 
 	public static function mergeChr( $text ){
 		return str_replace( self::$chrSetBf, self::$chrSetAf, $text ) ;

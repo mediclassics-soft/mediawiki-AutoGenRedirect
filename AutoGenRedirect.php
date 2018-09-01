@@ -1,4 +1,4 @@
-<?php
+﻿<?php
 if ( function_exists( 'wfLoadExtension' ) ) {
 	wfLoadExtension( 'AutoGenRedirect' );
 	// Keep i18n globals so mergeMessageFileList.php doesn't break
