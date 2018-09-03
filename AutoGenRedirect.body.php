@@ -34,13 +34,37 @@ class AutoGenRedirect {
 		$newWikiPage->doEditContent( $newPageContent, $editMessage );
 	}
 
+		/* ---------------------------------------------------------- */
+
+	// Hook : "PageContentSaveComplete"
+
+	public static function updatePageOnSaveComplete( &$wikiPage, &$user, $content, $summary, $isMinor, $isWatch, $section, &$flags, $revision, &$status, $baseRevId, $undidRevId  ){
+
+		$editMessage = "Page updated automatically by AutoGenRedirect";
+		if($summary == $editMessage) {
+			$status->fatal( new RawMessage( "message same" ) );
+			return true;
+		}
+
+		$title = $wikiPage->getTitle();
+
+		$text = ContentHandler::getContentText( $content );
+		$newPageContentText = Tools::mergeChr( $text );
+		$newPageContent = ContentHandler::makeContent( $newPageContentText, $title );
+		$wikiPage->doEditContent( $newPageContent, $editMessage );
+
+		return true;
+	}
+	
+	
 	/* ---------------------------------------------------------- */
 
 	// Hook : "PageContentSave"
 	// Return false to cancel a save and use $status to provide an error message.
 
-	public static function updatePage( &$wikiPage, &$user, &$content, &$summary, $isMinor, $isWatch, $section, &$flags, &$status ){
+	public static function updatePageOnSave( &$wikiPage, &$user, &$content, &$summary, $isMinor, $isWatch, $section, &$flags, &$status ){
 
+		/*
 		$editMessage = "Page updated automatically by AutoGenRedirect";
 		if($summary == $editMessage) {
 			$status->fatal( new RawMessage( "message same" ) );
@@ -60,10 +84,43 @@ class AutoGenRedirect {
 		if ( true ) {
 			$status->fatal( new RawMessage( "$newPageContentText" ) );
 		}
-
+		*/
 		return true;
 	}
 
+	/* ---------------------------------------------------------- */
+
+	// Hook : "EditPage::attemptSave"
+	
+	public static function updatePageOnEditPage( EditPage $editpage ) {
+
+	// https://doc.wikimedia.org/mediawiki-core/master/php/classEditPage.html
+
+
+		$title = $editpage->getTitle();
+		$article = $editpage->getArticle();
+		
+
+		$wikipage = $article->getPage();
+		$content = $wikipage->getContent( Revision::RAW );
+		$contentText = ContentHandler::getContentText( $content );
+
+		$newContentText = Tools::mergeChr( $contentText );
+		$newContent = ContentHandler::makeContent( $newPageContentText, $title );
+		/*
+		$status = $wikipage->doEditContent( $newContent, $summary );
+
+		if($status){
+			$status->getMessage()->text();
+		}
+		*/
+		return true;
+
+	}
+	
+	
+	
+	
 	/*
 	public static function updatePageTMP( $wikiPage, $user, $summary ){
 

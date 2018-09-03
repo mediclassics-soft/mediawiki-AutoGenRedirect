@@ -11,8 +11,12 @@
 		"AutoGenRedirect": "AutoGenRedirect.body.php"
 	},
 	"Hooks": {
-		"PageContentSaveComplete": ["AutoGenRedirect::createRedirectFromTitle"],
-		"PageContentSave": ["AutoGenRedirect::updatePage"]
+		"PageContentSaveComplete": [
+			"AutoGenRedirect::createRedirectFromTitle", 
+			"AutoGenRedirect::updatePageOnSaveComplete"
+		],
+		"PageContentSave": ["AutoGenRedirect::updatePageOnSave"],
+		"EditPage::attemptSave": ["AutoGenRedirect::updatePageOnEditPage"]
 	},
 	"manifest_version": 1
 }
